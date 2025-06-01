@@ -1,36 +1,98 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## 🛠️ Development Plan
 
-## Getting Started
+This plan outlines the structured steps for building the **Salamander Tracker** React frontend. It covers setup, feature implementation, and testing using Cypress.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Component Strucutre
+-https://lucid.app/lucidchart/4743f22d-9630-4fd7-88ac-e31fabf7fb97/edit?viewport_loc=-677%2C-29%2C2992%2C1466%2C0_0&invitationId=inv_d51f7d63-5ba9-4026-a7e8-081cc175dbb1
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 1. 🏗️ Setup
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- Initialize the Next.js app
+- Install necessary dependencies:
+  - cypress
+  - Material UI
+  - NextJS
+- Organize project structure:
+  - Create a `components/` folder
+  - Remove default Vite boilerplate and styles
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+### 2. 🧭 Routing & Layout
 
-To learn more about Next.js, take a look at the following resources:
+- Set up NextJS with the following routes:
+  - `/videos` – Video list page
+  - `/preview/:filename` – Video preview and settings page
+- Build a basic layout (optional header or nav)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 3. 📼 Video Chooser Page
 
-## Deploy on Vercel
+- Display a list of mock videos from `mock/videos.js` Or from API 
+- Enable navigation to the preview page on click
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 4. 🔍 Video Preview Page
+
+- Show:
+  - Original thumbnail image
+  - Binarized thumbnail with centroid
+- Include interactive controls:
+  - Threshold slider
+  - Target color picker
+- Add functionality:
+  - “Process Video” button
+  - Job status display
+  - Download link to result CSV
+
+---
+
+### 5. 🖼️ Image Logic
+
+- Convert the thumbnail image to binary using:
+  - Selected color
+  - Threshold value
+- Detect the largest connected region
+- Calculate and render the centroid on the binarized image
+- Reimplement your Java logic in JavaScript
+
+---
+
+### 6. 🔄 Processing Jobs
+
+- Implement job submission:
+  - `POST /process/{filename}?targetColor=<hex>&threshold=<int>`
+- Track job status via polling:
+  - `GET /process/{jobId}/status`
+- Display download link when job is complete
+
+---
+
+### 7. 🧪 Testing (Cypress)
+
+- Use Cypress for end-to-end testing
+
+#### `/videos` – Video Chooser Page
+
+- Renders list of videos from mock data
+- Navigates to preview page on selection
+
+#### `/preview/:filename` – Video Preview Page
+
+- Loads original and binarized thumbnails
+- Updates binarized image on slider/color input
+- Displays centroid marker
+- Submits processing job correctly
+- Tracks job status and displays CSV download
+
+---
+
+### 8. 🎨 Final Touches & Styling
+
+- Apply consistent design with Material UI
+- Add favicon, custom title, and UI polish
+- Final code cleanup and deployment prep
