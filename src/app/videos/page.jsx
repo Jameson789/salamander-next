@@ -1,4 +1,9 @@
 "use client"
+
+import VideoList from "@/components/VideoList"
+
 export default function VideoChooserPage() {
-  return <h1>Video Chooser Page</h1>;
+    return (
+        <VideoList />
+    )
 }
