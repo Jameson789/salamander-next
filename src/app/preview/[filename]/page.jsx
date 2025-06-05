@@ -1,8 +1,9 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { useParams } from "next/navigation";
 
 export default function PreviewPage({ params }) {
-  const { filename } = params;
+  const { filename } = useParams();
   const [color, setColor] = useState("#ff0000");
   const [threshold, setThreshold] = useState(100);
   const canvasRef = useRef(null);
