@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 const VideoList = () => {
   const [videos, setVideos] = useState([]);
@@ -27,8 +28,12 @@ const VideoList = () => {
 
   return (
     <ul>
-      {videos.map((video, index) => (
-        <li key={index}>{video}</li>
+      {videos.map((video) => (
+        <li key={video}>
+          <Link href={`/preview/${encodeURIComponent(video)}`}>
+            {video}
+          </Link>
+        </li>
       ))}
     </ul>
   );
