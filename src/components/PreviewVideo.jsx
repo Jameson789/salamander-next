@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "next/navigation";
-import { Slider } from "@mui/material";
+import { Slider, Container, Box, Grid, Typography } from "@mui/material";
 
 export default function PreviewVideo({ params }) {
   const { filename } = useParams();
@@ -66,48 +66,87 @@ export default function PreviewVideo({ params }) {
   };
 
   return (
-    <div>
-      <h1>Preview: {filename}</h1>
-
-      <div
-        style={{
+    <Container maxWidth="md">
+      <Box
+        sx={{
           display: "flex",
-          gap: "2rem",
-          alignItems: "flex-start",
-          marginBottom: "1rem",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 4,
+          mt: 4,
         }}
       >
-        <div>
-          <h3>Original</h3>
-          <img
-            src={thumbnailUrl}
-            alt="Original thumbnail"
-            style={{ width: "300px", border: "1px solid #ccc" }}
-          />
-        </div>
-        <div>
-          <h3>Binarized</h3>
-          <canvas ref={canvasRef} style={{ border: "1px solid #ccc" }} />
-        </div>
-      </div>
+        <Typography variant="h4" gutterBottom>
+          Preview: {filename}
+        </Typography>
 
-      <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-        <label>Pick Target Color: </label>
-        <input
-          type="color"
-          value={color}
-          onChange={(e) => setColor(e.target.value)}
-        />
-        <label style={{ marginLeft: "1rem" }}>Threshold: </label>
-        <Slider
-          value={threshold}
-          min={0}
-          max={200}
-          defaultValue={100}
-          onChange={(e) => setThreshold(Number(e.target.value))}
-          sx={{ width: 300 }}
-        />
-      </div>
-    </div>
+        <Box
+          sx={{
+            display: "flex",
+            gap: 4,
+            alignItems: "center",
+            justifyContent: "center",
+            flexWrap: "wrap",
+          }}
+        >
+          <Box sx={{ textAlign: "center" }}>
+            <Typography variant="h6" gutterBottom>
+              Original
+            </Typography>
+            <img
+              src={thumbnailUrl}
+              alt="Original thumbnail"
+              style={{ width: "300px", border: "1px solid #ccc" }}
+            />
+          </Box>
+
+          <Box sx={{ textAlign: "center" }}>
+            <Typography variant="h6" gutterBottom>
+              Binarized
+            </Typography>
+            <canvas
+              ref={canvasRef}
+              style={{
+                border: "1px solid #ccc",
+                display: "block",
+                margin: "0 auto",
+              }}
+            />
+          </Box>
+        </Box>
+
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 2,
+            flexWrap: "wrap",
+            justifyContent: "center",
+          }}
+        >
+          <Typography>Pick Target Color:</Typography>
+          <input
+            type="color"
+            value={color}
+            onChange={(e) => setColor(e.target.value)}
+            style={{
+              width: "40px",
+              height: "40px",
+              border: "none",
+              padding: 0,
+            }}
+          />
+          <Typography sx={{ ml: 2 }}>Threshold:</Typography>
+          <Slider
+            value={threshold}
+            min={0}
+            max={200}
+            onChange={(e, newValue) => setThreshold(newValue)}
+            sx={{ width: 300 }}
+          />
+        </Box>
+      </Box>
+    </Container>
   );
 }
