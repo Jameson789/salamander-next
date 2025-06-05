@@ -108,6 +108,6 @@ Thumbnail Preview	Renders original and binarized image from mock data
 Live Tuning	Includes working threshold slider and color picker
 ✅ Process Button	Sends a mock POST request and simulates job start
 ✅ Job Status + CSV Link	Tracks mock job status and shows downloadable link when “complete”
-✅ API Successfully Calls Data 	 At least one feature now pulls real data from the backend using fetch 
+API Successfully Calls Data 	 At least one feature now pulls real data from the backend using fetch 
 ✅ Basic Tests       	 Includes at least one working test using mock data (component or interaction)  
 ✅ Styling with Material UI 
