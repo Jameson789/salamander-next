@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "next/navigation";
+import { Slider } from "@mui/material";
 
 export default function PreviewVideo({ params }) {
   const { filename } = useParams();
@@ -9,7 +10,9 @@ export default function PreviewVideo({ params }) {
   const canvasRef = useRef(null);
   const imgRef = useRef(null);
 
-  const thumbnailUrl = `http://localhost:3001/thumbnail/${encodeURIComponent(filename)}`;
+  const thumbnailUrl = `http://localhost:3001/thumbnail/${encodeURIComponent(
+    filename
+  )}`;
 
   useEffect(() => {
     const img = new Image();
@@ -66,7 +69,14 @@ export default function PreviewVideo({ params }) {
     <div>
       <h1>Preview: {filename}</h1>
 
-      <div style={{ display: "flex", gap: "2rem", alignItems: "flex-start", marginBottom: "1rem" }}>
+      <div
+        style={{
+          display: "flex",
+          gap: "2rem",
+          alignItems: "flex-start",
+          marginBottom: "1rem",
+        }}
+      >
         <div>
           <h3>Original</h3>
           <img
@@ -81,16 +91,21 @@ export default function PreviewVideo({ params }) {
         </div>
       </div>
 
-      <div>
+      <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
         <label>Pick Target Color: </label>
-        <input type="color" value={color} onChange={(e) => setColor(e.target.value)} />
-        <label style={{ marginLeft: "1rem" }}>Threshold: </label>
         <input
-          type="number"
+          type="color"
+          value={color}
+          onChange={(e) => setColor(e.target.value)}
+        />
+        <label style={{ marginLeft: "1rem" }}>Threshold: </label>
+        <Slider
           value={threshold}
           min={0}
-          max={442}
+          max={200}
+          defaultValue={100}
           onChange={(e) => setThreshold(Number(e.target.value))}
+          sx={{ width: 300 }}
         />
       </div>
     </div>
