@@ -10,7 +10,7 @@ const VideoList = () => {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const res = await fetch("http://localhost:3001/api/videos");
+        const res = await fetch("http://localhost:3000/api/videos");
         if (!res.ok) throw new Error("Failed to load videos");
 
         const data = await res.json();
