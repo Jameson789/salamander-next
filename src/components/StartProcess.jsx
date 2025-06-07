@@ -1,11 +1,13 @@
+import {Button, Box } from "@mui/material"
+
 export default function StartProcess(){
 
     const start = () => {
         console.log("starting JAR");
     }
     return (
-        <div>
-            <button onClick={start}>Start Process</button>
-        </div>
+        <Box sx={{display: "flex", justifyContent:"center"}}>
+            <Button sx={{backgroundColor: "lightblue", color: "black", textAlign: "center"}}onClick={start}>Start Process</Button>
+        </Box>
     )
 }
