@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "next/navigation";
-import { Slider, Container, Box, Grid, Typography } from "@mui/material";
+import { Slider, Container, Box, Typography } from "@mui/material";
 import StartProcess from "./StartProcess";
 
 export default function PreviewVideo({ params }) {
@@ -36,7 +36,6 @@ export default function PreviewVideo({ params }) {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
 
-    // Scale image down to a max width of 300px
     const scale = 300 / img.width;
     const width = img.width * scale;
     const height = img.height * scale;
@@ -48,7 +47,6 @@ export default function PreviewVideo({ params }) {
     const imageData = ctx.getImageData(0, 0, width, height);
     const data = imageData.data;
 
-    // Convert hex color to RGB
     const rT = parseInt(targetColor.slice(1, 3), 16);
     const gT = parseInt(targetColor.slice(3, 5), 16);
     const bT = parseInt(targetColor.slice(5, 7), 16);
@@ -66,52 +64,49 @@ export default function PreviewVideo({ params }) {
     ctx.putImageData(imageData, 0, 0);
   };
 
+  const cardStyle = {
+    padding: 2,
+    borderRadius: 2,
+    backgroundColor: "#fff",
+    boxShadow: 1,
+    textAlign: "center",
+    maxWidth: 320,
+    flex: "1 1 320px",
+  };
+
   return (
-    <Container maxWidth="md">
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: 4,
-          mt: 4,
-        }}
-      >
-        <Typography variant="h4" gutterBottom>
+    <Container maxWidth="md" sx={{ py: 5, px: 3, bgcolor: "#f9f9f9", borderRadius: 2, boxShadow: 2 }}>
+      <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 5, marginBottom: 2 }}>
+        <Typography variant="h4" sx={{ fontWeight: 600, color: "#1976d2" }}>
           Preview: {filename}
         </Typography>
 
-        <Box
-          sx={{
-            display: "flex",
-            gap: 4,
-            alignItems: "center",
-            justifyContent: "center",
-            flexWrap: "wrap",
-          }}
-        >
-          <Box sx={{ textAlign: "center" }}>
+        <Box sx={{ display: "flex", gap: 4, flexWrap: "wrap", justifyContent: "center", width: "100%" }}>
+          <Box sx={cardStyle}>
             <Typography variant="h6" gutterBottom>
               Original
             </Typography>
             <img
               src={thumbnailUrl}
               alt="Original thumbnail"
-              style={{ width: "300px", border: "1px solid #ccc" }}
+              style={{
+                width: "300px",
+                borderRadius: 8,
+                border: "1px solid #ccc",
+              }}
             />
           </Box>
 
-          <Box sx={{ textAlign: "center" }}>
+          <Box sx={cardStyle}>
             <Typography variant="h6" gutterBottom>
               Binarized
             </Typography>
             <canvas
               ref={canvasRef}
               style={{
+                width: "300px",
+                borderRadius: 8,
                 border: "1px solid #ccc",
-                display: "block",
-                margin: "0 auto",
               }}
             />
           </Box>
@@ -121,8 +116,12 @@ export default function PreviewVideo({ params }) {
           sx={{
             display: "flex",
             alignItems: "center",
-            gap: 2,
             flexWrap: "wrap",
+            gap: 2,
+            padding: 3,
+            borderRadius: 2,
+            backgroundColor: "#fff",
+            boxShadow: 1,
             justifyContent: "center",
           }}
         >
@@ -132,22 +131,24 @@ export default function PreviewVideo({ params }) {
             value={color}
             onChange={(e) => setColor(e.target.value)}
             style={{
-              width: "40px",
-              height: "40px",
+              width: 40,
+              height: 40,
               border: "none",
-              padding: 0,
+              borderRadius: 4,
+              cursor: "pointer",
             }}
           />
-          <Typography sx={{ ml: 2 }}>Threshold:</Typography>
+          <Typography sx={{ marginLeft: 2 }}>Threshold:</Typography>
           <Slider
             value={threshold}
             min={0}
             max={200}
             onChange={(e, newValue) => setThreshold(newValue)}
-            sx={{ width: 300 }}
+            sx={{ width: 250 }}
           />
         </Box>
       </Box>
+
       <StartProcess />
     </Container>
   );
