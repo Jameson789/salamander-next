@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "next/navigation";
 import { Slider, Container, Box, Grid, Typography } from "@mui/material";
+import StartProcess from "./StartProcess";
 
 export default function PreviewVideo({ params }) {
   const { filename } = useParams();
@@ -147,6 +148,7 @@ export default function PreviewVideo({ params }) {
           />
         </Box>
       </Box>
+      <StartProcess />
     </Container>
   );
 }
