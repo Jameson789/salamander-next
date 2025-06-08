@@ -11,7 +11,7 @@ export default function PreviewVideo({ params }) {
   const canvasRef = useRef(null);
   const imgRef = useRef(null);
 
-  const thumbnailUrl = `http://localhost:3001/thumbnail/${encodeURIComponent(
+  const thumbnailUrl = `http://localhost:3000/thumbnail/${encodeURIComponent(
     filename
   )}`;
 
