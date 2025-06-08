@@ -149,7 +149,7 @@ export default function PreviewVideo({ params }) {
         </Box>
       </Box>
 
-      <StartProcess />
+      <StartProcess filename={filename} color={color} threshold={threshold} />
     </Container>
   );
 }
