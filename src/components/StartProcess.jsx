@@ -1,11 +1,13 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Box, Button, Typography, Link, LinearProgress } from "@mui/material";
+import CompletedJobs from "./CompletedJobs";
 
 export default function StartProcess({ filename, color, threshold }) {
   const [jobId, setJobId] = useState(null);
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState("");
+  const [completedJobs, setCompletedJobs] = useState([]);
 
   const start = async () => {
     setError("");
@@ -26,6 +28,7 @@ export default function StartProcess({ filename, color, threshold }) {
         const { error } = await res.json();
         throw new Error(error);
       }
+
       const data = await res.json();
       setJobId(data.jobId);
     } catch (err) {
@@ -38,15 +41,22 @@ export default function StartProcess({ filename, color, threshold }) {
     if (!jobId) return;
 
     const interval = setInterval(async () => {
-      const res = await fetch(`http://localhost:3000/process/${jobId}/status`);
-      const data = await res.json();
+      try {
+        const res = await fetch(`http://localhost:3000/process/${jobId}/status`);
+        const data = await res.json();
 
-      if (data.status === "done") {
-        setStatus("done");
-        clearInterval(interval);
-      } else if (data.status === "error") {
+        if (data.status === "done") {
+          setStatus("done");
+          setCompletedJobs((prev) => [...prev, { jobId, filename }]);
+          clearInterval(interval);
+        } else if (data.status === "error") {
+          setStatus("error");
+          setError(data.error || "Unknown error");
+          clearInterval(interval);
+        }
+      } catch (err) {
         setStatus("error");
-        setError(data.error);
+        setError("Failed to check job status");
         clearInterval(interval);
       }
     }, 2000);
@@ -62,11 +72,9 @@ export default function StartProcess({ filename, color, threshold }) {
         disabled={status === "processing"}
         sx={{ backgroundColor: "lightblue", color: "black" }}
       >
-        {status === "processing" && "Processing..."}
-        {status !== "processing" && "Start Process"}
+        {status === "processing" ? "Processing..." : "Start Process"}
       </Button>
 
-      {/* Show progress bar when processing */}
       {status === "processing" && (
         <Box sx={{ width: "100%", mt: 2 }}>
           <LinearProgress />
@@ -80,12 +88,17 @@ export default function StartProcess({ filename, color, threshold }) {
       {status === "done" && (
         <Box sx={{ mt: 2 }}>
           <Typography>✅ Process complete!</Typography>
-          <Link href={`http://localhost:3000/process/${jobId}.csv`} underline="hover" download>
+          <Link
+            href={`http://localhost:3000/process/${jobId}.csv`}
+            underline="hover"
+            download
+          >
             Download CSV
           </Link>
         </Box>
       )}
-    </Box>
 
+      <CompletedJobs jobs={completedJobs} />
+    </Box>
   );
 }
