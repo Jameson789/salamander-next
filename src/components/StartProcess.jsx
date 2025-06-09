@@ -88,13 +88,6 @@ export default function StartProcess({ filename, color, threshold }) {
       {status === "done" && (
         <Box sx={{ mt: 2 }}>
           <Typography>✅ Process complete!</Typography>
-          <Link
-            href={`http://localhost:3000/process/${jobId}.csv`}
-            underline="hover"
-            download
-          >
-            Download CSV
-          </Link>
         </Box>
       )}
 
