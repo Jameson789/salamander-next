@@ -73,7 +73,7 @@ export default function Home() {
                   marginBottom: 4,
                   opacity: 0.9,
                 }}
-              >
+              > 
                 Track and analyze object movement in videos with precision
               </Typography>
               <Button

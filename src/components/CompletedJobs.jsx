@@ -1,7 +1,7 @@
 "use client";
 import { Box, Typography, List, ListItem, Button, Link } from "@mui/material";
 
-export default function CompletedJobs({ jobs }) {
+export default function CompletedJobs({ jobs  }) {
   if (!jobs.length) return null;
 
   return (
