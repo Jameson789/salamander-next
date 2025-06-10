@@ -1,34 +1,12 @@
 "use client";
-import { Box, Typography, List, ListItem, Button } from "@mui/material";
+import { Box, Typography, List, ListItem, Button, Link } from "@mui/material";
 
 export default function CompletedJobs({ jobs }) {
   if (!jobs.length) return null;
 
-  const handleDownload = async (jobId, filename) => {
-    try {
-      const res = await fetch(`http://localhost:3000/process/${jobId}.csv`);
-      if (!res.ok) throw new Error("File not found");
-
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
-
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `${filename.replace(/\.[^/.]+$/, "")}_${jobId}.csv`; // strip extension
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    } catch (err) {
-      console.error("Download failed:", err);
-    }
-  };
-
   return (
-    <Box sx={{ mt: 6 }}>
-      <Typography variant="h6" gutterBottom>
-        Completed Jobs
-      </Typography>
+    <Box sx={{ marginTop: 6 }}>
+      <Typography variant="h6">Completed Jobs</Typography>
       <List>
         {jobs.map(({ jobId, filename }) => (
           <ListItem
@@ -40,13 +18,16 @@ export default function CompletedJobs({ jobs }) {
             }}
           >
             <Typography>{filename}</Typography>
-            <Button
-              variant="outlined"
-              size="small"
-              onClick={() => handleDownload(jobId, filename)}
+            <Link
+              href={`http://localhost:3000/process/${jobId}.csv`}
+              // removes file extension
+              download={`${filename.replace(/\.[^/.]+$/, "")}.csv`}
+              sx={{ textDecoration: "none" }}
             >
-              Download
-            </Button>
+              <Button variant="outlined" size="small">
+                Download
+              </Button>
+            </Link>
           </ListItem>
         ))}
       </List>
