@@ -32,6 +32,8 @@ export default function PreviewVideo({ params }) {
     }
   }, [color, threshold]);
 
+  
+// begins binarizing image thumbnail fetched from backend
   const drawBinarized = (img, targetColor, threshold) => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
@@ -75,7 +77,7 @@ export default function PreviewVideo({ params }) {
   };
 
   return (
-    <Container maxWidth="md" sx={{ py: 5, px: 3, bgcolor: "#f9f9f9", borderRadius: 2, boxShadow: 2 }}>
+    <Container maxWidth="md" sx={{ py: 5, px: 3, bgcolor: "#f9f9f9", borderRadius: 2, boxShadow: 2, marginTop: 2 }}>
       <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 5, marginBottom: 2 }}>
         <Typography variant="h4" sx={{ fontWeight: 600, color: "#1976d2" }}>
           Preview: {filename}
@@ -97,6 +99,7 @@ export default function PreviewVideo({ params }) {
             />
           </Box>
 
+          {/* Preview Binarized Logic */}
           <Box sx={cardStyle}>
             <Typography variant="h6" gutterBottom>
               Binarized
@@ -125,6 +128,8 @@ export default function PreviewVideo({ params }) {
             justifyContent: "center",
           }}
         >
+
+          {/* Select a color with a color picker */}
           <Typography>Pick Target Color:</Typography>
           <input
             type="color"
@@ -139,16 +144,18 @@ export default function PreviewVideo({ params }) {
             }}
           />
           <Typography sx={{ marginLeft: 2 }}>Threshold:</Typography>
+          {/* Incorporate MUI SLider for selecting Threshold */}
           <Slider
             value={threshold}
             min={0}
-            max={200}
+            max={255}
             onChange={(e, newValue) => setThreshold(newValue)}
             sx={{ width: 250 }}
           />
         </Box>
       </Box>
 
+        {/* Pass Props to StartProcess */}
       <StartProcess filename={filename} color={color} threshold={threshold} />
     </Container>
   );
