@@ -17,7 +17,7 @@ export default function CompletedJobs({ jobs  }) {
               alignItems: "center",
             }}
           >
-            <Typography>{filename}</Typography>
+            <Typography>{"Video: " + filename + "  -  Job ID: " + jobId}</Typography>
             <Link
               href={`http://localhost:3000/process/${filename.slice(0, filename.length - 4)}_${jobId}.csv`}
               // removes file extension
