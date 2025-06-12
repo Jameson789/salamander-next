@@ -6,7 +6,7 @@ import StartProcess from "./StartProcess";
 
 export default function PreviewVideo({ params }) {
   const { filename } = useParams();
-  const [color, setColor] = useState("#ff0000");
+  const [color, setColor] = useState("#000000");
   const [threshold, setThreshold] = useState(100);
   const canvasRef = useRef(null);
   const imgRef = useRef(null);
@@ -133,6 +133,7 @@ export default function PreviewVideo({ params }) {
           <Typography>Pick Target Color:</Typography>
           <input
             type="color"
+            
             value={color}
             onChange={(e) => setColor(e.target.value)}
             style={{
