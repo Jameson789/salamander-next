@@ -148,6 +148,7 @@ export default function PreviewVideo({ params }) {
           <Typography>Pick Target Color:</Typography>
           <input
             type="color"
+            
             value={color}
             onChange={(e) => setColor(e.target.value)}
             style={{

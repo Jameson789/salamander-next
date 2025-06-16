@@ -17,6 +17,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/salamander.png" type="image/png" />
+      </head>
       <body className={inter.variable}>
         {children}
       </body>
