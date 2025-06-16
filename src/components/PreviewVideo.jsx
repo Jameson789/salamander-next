@@ -4,7 +4,6 @@ import { useParams } from "next/navigation";
 import { Slider, Container, Box, Typography } from "@mui/material";
 import StartProcess from "./StartProcess";
 
-// Video preview and processing component
 export default function PreviewVideo({ params }) {
   // Get filename from URL
   const { filename } = useParams();
