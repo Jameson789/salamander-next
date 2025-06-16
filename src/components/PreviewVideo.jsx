@@ -8,7 +8,7 @@ export default function PreviewVideo({ params }) {
   // Get filename from URL
   const { filename } = useParams();
   // States for color and threshold
-  const [color, setColor] = useState("#ff0000");
+  const [color, setColor] = useState("#000000");
   const [threshold, setThreshold] = useState(100);
   // Refs for canvas and image
   const canvasRef = useRef(null);
