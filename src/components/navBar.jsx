@@ -9,28 +9,29 @@ import {
 } from "@mui/material";
 import MovieIcon from "@mui/icons-material/Movie";
 
+
 const NavBar = () => {
   return (
     <AppBar position="static" sx={{ bgcolor: "white", boxShadow: 1 }}>
       <Container maxWidth="lg">
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-            <a href="/" style={{textDecoration: "none"}}>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            
+
+          {/* Logo and title */}
+          <a href="/" style={{ textDecoration: "none" }}>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
               <MovieIcon sx={{ color: "primary.main", marginRight: 1 }} />
-            
-            <Typography
-              variant="h6"
-              component="div"
-              sx={{ color: "primary.main", fontWeight: "bold" }}
-            >
-              Salamander
-            </Typography>
-            
-          </Box>
+              <Typography
+                variant="h6"
+                component="div"
+                sx={{ color: "primary.main", fontWeight: "bold" }}
+              >
+                Salamander
+              </Typography>
+            </Box>
           </a>
 
-          {/* Navigation Links */}
+          {/* Navigation links */}
+
           <Box>
             <Button
               component={Link}
@@ -48,7 +49,8 @@ const NavBar = () => {
               href="/videos"
               sx={{
                 color: "text.primary",
-                mx: 1,
+                marginLeft: 1,
+                marginRight: 1,
                 "&:hover": { bgcolor: "grey.100" },
               }}
             >

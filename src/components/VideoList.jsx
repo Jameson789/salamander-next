@@ -1,15 +1,15 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { 
-  Box, 
-  Button, 
-  List, 
-  ListItem, 
-  Typography, 
+import {
+  Box,
+  Button,
+  List,
+  ListItem,
+  Typography,
   Alert,
   Container,
-  Paper 
+  Paper
 } from "@mui/material";
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 
@@ -20,7 +20,7 @@ const VideoList = () => {
 
   useEffect(() => {
     fetchVideos();
-  }, []);  
+  }, []);
 
   const fetchVideos = async () => {
     try {
@@ -109,28 +109,28 @@ const VideoList = () => {
         )}
 
 
-          <List>
-            {videos.map((video) => (
-              <ListItem 
-                key={video}
-                sx={{
-                  borderBottom: '1px solid #eee'
+        <List>
+          {videos.map((video) => (
+            <ListItem
+              key={video}
+              sx={{
+                borderBottom: '1px solid #eee'
+              }}
+            >
+              <Link
+                href={`/preview/${encodeURIComponent(video)}`}
+                style={{
+                  textDecoration: 'none',
+                  color: 'black',
+                  width: '100%',
+                  padding: '8px '
                 }}
               >
-                <Link 
-                  href={`/preview/${encodeURIComponent(video)}`}
-                  style={{
-                    textDecoration: 'none',
-                    color: 'black',
-                    width: '100%',
-                    padding: '8px '
-                  }}
-                >
-                  {video}
-                </Link>
-              </ListItem>
-            ))}
-          </List>
+                {video}
+              </Link>
+            </ListItem>
+          ))}
+        </List>
       </Paper>
     </Container>
   );
