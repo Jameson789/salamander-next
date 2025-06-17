@@ -114,7 +114,3 @@ Live Tuning	Includes working threshold slider and color picker
 API Successfully Calls Data 	 At least one feature now pulls real data from the backend using fetch 
 ✅ Basic Tests       	 Includes at least one working test using mock data (component or interaction)  
 ✅ Styling with Material UI 
-
-
-
-Google Slides Link: https://docs.google.com/presentation/d/1vQXuqPnlKrJEo4V9by8IB3ZFG53N0bQGygcrkF2fh7U/edit?usp=sharing 
