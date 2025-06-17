@@ -1,15 +1,15 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { 
-  Box, 
-  Button, 
-  List, 
-  ListItem, 
-  Typography, 
+import {
+  Box,
+  Button,
+  List,
+  ListItem,
+  Typography,
   Alert,
   Container,
-  Paper 
+  Paper
 } from "@mui/material";
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 
@@ -20,8 +20,9 @@ const VideoList = () => {
 
   useEffect(() => {
     fetchVideos();
-  }, []);  
+  }, []);
 
+  // Fetch list of videos from backend to display
   const fetchVideos = async () => {
     try {
       const res = await fetch("http://localhost:3000/api/videos");
@@ -34,6 +35,7 @@ const VideoList = () => {
     }
   };
 
+  // function to allow users to upload their own videos from files
   const handleUpload = async (event) => {
     const file = event.target.files[0];
     if (!file) return;
@@ -51,11 +53,13 @@ const VideoList = () => {
       const formData = new FormData();
       formData.append('video', file);
 
+      //post the video to the upload route on backend
       const res = await fetch('http://localhost:3000/api/upload', {
         method: 'POST',
         body: formData,
       });
 
+      // Return error if video not uploaded successfully
       if (!res.ok) {
         throw new Error('Failed to upload video');
       }
@@ -70,7 +74,7 @@ const VideoList = () => {
   };
 
   return (
-    <Container maxWidth="md" sx={{ py: 4 }}>
+    <Container maxWidth="md" sx={{ paddingTop: 4, paddingBottom: 4 }}>
       <Paper sx={{ p: 3 }}>
         {/* Upload Section */}
         <Box sx={{ mb: 4, textAlign: 'center' }}>
@@ -89,7 +93,10 @@ const VideoList = () => {
               disabled={uploading}
               sx={{ mb: 2 }}
             >
-              {uploading ? 'Uploading...' : 'Upload Video'}
+              {(() => {
+                if (uploading) return 'Uploading...';
+                return 'Upload Video';
+              })()}
             </Button>
           </label>
         </Box>
@@ -109,28 +116,30 @@ const VideoList = () => {
         )}
 
 
-          <List>
-            {videos.map((video) => (
-              <ListItem 
-                key={video}
-                sx={{
-                  borderBottom: '1px solid #eee'
+        
+      {/* Map through all videos, displaying each one with styling*/}
+        <List>
+          {videos.map((video) => (
+            <ListItem
+              key={video}
+              sx={{
+                borderBottom: '1px solid #eee'
+              }}
+            >
+              <Link
+                href={`/preview/${encodeURIComponent(video)}`}
+                style={{
+                  textDecoration: 'none',
+                  color: 'black',
+                  width: '100%',
+                  padding: '8px '
                 }}
               >
-                <Link 
-                  href={`/preview/${encodeURIComponent(video)}`}
-                  style={{
-                    textDecoration: 'none',
-                    color: 'black',
-                    width: '100%',
-                    padding: '8px '
-                  }}
-                >
-                  {video}
-                </Link>
-              </ListItem>
-            ))}
-          </List>
+                {video}
+              </Link>
+            </ListItem>
+          ))}
+        </List>
       </Paper>
     </Container>
   );

@@ -1,88 +1,60 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Box, Button, Typography, Link, LinearProgress } from "@mui/material";
+import { Box, Button, Typography, LinearProgress } from "@mui/material";
 import CompletedJobs from "./CompletedJobs";
+import withVideoProcessing from "./withVideoProcessing";
 
-export default function StartProcess({ filename, color, threshold }) {
-  const [jobId, setJobId] = useState(null);
-  const [status, setStatus] = useState("idle");
-  const [error, setError] = useState("");
+const StartProcess = ({ filename, color, threshold, status, error, jobId, start }) => {
   const [completedJobs, setCompletedJobs] = useState([]);
-
-  const start = async () => {
-    setError("");
-    setStatus("processing");
-
-    try {
-      const res = await fetch(
-        `http://localhost:3000/process/${filename}?targetColor=${color.slice(1)}&threshold=${threshold}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      if (!res.ok) {
-        const { error } = await res.json();
-        throw new Error(error);
-      }
-
-      const data = await res.json();
-      setJobId(data.jobId);
-    } catch (err) {
-      setError(err.message);
-      setStatus("idle");
-    }
-  };
 
   useEffect(() => {
     if (!jobId) return;
 
+    // intervally call backend to fetch progess of job
     const interval = setInterval(async () => {
       try {
         const res = await fetch(`http://localhost:3000/process/${jobId}/status`);
         const data = await res.json();
 
+        // if job is done, stop calling 
         if (data.status === "done") {
-          setStatus("done");
           setCompletedJobs((prev) => [...prev, { jobId, filename }]);
           clearInterval(interval);
-        } else if (data.status === "error") {
-          setStatus("error");
-          setError(data.error || "Unknown error");
-          clearInterval(interval);
         }
+
+        // If error, stop calling and return an error
       } catch (err) {
-        setStatus("error");
-        setError("Failed to check job status");
+        console.error("Failed to check job status:", err);
         clearInterval(interval);
       }
     }, 2000);
 
     return () => clearInterval(interval);
-  }, [jobId]);
+  }, [jobId, filename]);
 
   return (
     <Box sx={{ marginTop: 6, textAlign: "center" }}>
+      {/* processing button. if status is processing, button is disabled */}
       <Button
         variant="contained"
-        onClick={start}
+        onClick={() => start(filename, color, threshold)}
         disabled={status === "processing"}
         sx={{ backgroundColor: "lightblue", color: "black" }}
       >
         {status === "processing" ? "Processing..." : "Start Process"}
       </Button>
 
+      {/* If job is still processing, render MUI progress bar */}
       {status === "processing" && (
         <Box sx={{ width: "100%", mt: 2 }}>
           <LinearProgress />
         </Box>
       )}
 
+
+      {/* Return error if error in job processing */}
       {error && (
-        <Typography sx={{ mt: 2, color: "red" }}>❌ {error}</Typography>
+        <Typography sx={{ mt: 2, color: "red" }}>{error}</Typography>
       )}
 
       {status === "done" && (
@@ -91,7 +63,10 @@ export default function StartProcess({ filename, color, threshold }) {
         </Box>
       )}
 
+      {/* Render list of completed jobs */}
       <CompletedJobs jobs={completedJobs} />
     </Box>
   );
-}
+};
+
+export default withVideoProcessing(StartProcess);
