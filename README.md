@@ -4,6 +4,9 @@ This plan outlines the structured steps for building the **Salamander Tracker** 
 
 ---
 
+### Project Presentation
+-https://docs.google.com/presentation/d/1vQXuqPnlKrJEo4V9by8IB3ZFG53N0bQGygcrkF2fh7U/edit?usp=sharing
+
 ### Component Strucutre
 -https://lucid.app/lucidchart/4743f22d-9630-4fd7-88ac-e31fabf7fb97/edit?viewport_loc=-677%2C-29%2C2992%2C1466%2C0_0&invitationId=inv_d51f7d63-5ba9-4026-a7e8-081cc175dbb1
 
